@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 import productsModule from './modules/products';
+import ordersModule from './modules/orders';
 
 Vue.use(Vuex)
 
@@ -10,6 +11,7 @@ const store = new Vuex.Store({
   strict : true,
   modules : {
     products : productsModule,
+    orders : ordersModule,
     axiosConfig : {},
   },
   state : {
