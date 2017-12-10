@@ -13,8 +13,8 @@
         <hr>
           <div class="product-list" v-if="products && products.length >0">
             <div :key="product._id" class="product pa2 bg-black-10" v-for="product in products">
-              <router-link class="no-underline" :to="{ name : 'ProductDetails', params: { productId : product.id} }">
-                {{ product.name }} [{{ product.id }}]
+              <router-link class="no-underline db" :to="{ name : 'ProductDetails', params: { productId : product._id} }">
+                {{ product.name }}
               </router-link>
             </div>
           </div>

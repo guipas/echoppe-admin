@@ -127,7 +127,7 @@ export default {
       this.$router.push('/');
     },
     featureUpload (upload) {
-      if (this.product.featured === upload._id) {
+      if (this.product.featured && this.product.featured._id === upload._id) {
         this.product.featured = null;
       } else {
         this.product.featured = upload;

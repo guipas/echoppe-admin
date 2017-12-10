@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-form-element">
+  <div class="admin-form-element" :class="{ three : three }">
     <slot></slot>
   </div>
 </template>
@@ -8,6 +8,7 @@
 
 export default {
   name: 'form-element',
+  props : ['three'],
   data() {
     return {
     };

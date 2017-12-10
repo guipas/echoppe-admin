@@ -16,11 +16,15 @@ const store = new Vuex.Store({
   },
   state : {
     csrf : null,
+    settings : null,
   },
   mutations : {
     setCsrf (state, csrf) {
       state.axiosConfig.headers = { 'x-csrf-token': csrf };
       state.csrf = csrf;
+    },
+    SET_SETTINGS (state, settings) {
+      state.settings = settings;
     },
   },
   actions : {
@@ -30,8 +34,15 @@ const store = new Vuex.Store({
         commit('setCsrf', res.data.csrf);
       });
     },
+    getSettings ({ commit }) {
+      return axios.get('/settings')
+      .then(res => {
+        commit('SET_SETTINGS', res.data);
+      });
+    },
     init ({ dispatch }) {
-      return dispatch('getCsrf');
+      return dispatch('getCsrf')
+      .then(() => dispatch('getSettings'));
     },
   }
 });

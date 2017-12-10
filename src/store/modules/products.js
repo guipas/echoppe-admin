@@ -49,14 +49,14 @@ export default {
         commit('setProductsLoading', false);
       })
     },
-    fetchProduct({ commit }, id) {
-      if (id === `new`) {
+    fetchProduct({ commit }, _id) {
+      if (_id === `new`) {
         commit('setCurrentProduct', { name : `` });
         return;
       }
       commit('setCurrentProductLoading', true);
 
-      return axios.get(`/products/${id}`)
+      return axios.get(`/products/${_id}`)
       .then(res => {
         commit('setCurrentProduct', res.data);
       })
@@ -68,16 +68,15 @@ export default {
       });
     },
     saveProduct({ commit, dispatch, rootState }, product) {
-      if (product.id) {
-        return axios.put(`/products/${product.id}`, product, { headers: {'x-csrf-token': rootState.csrf } })
+      if (product._id) {
+        return axios.put(`/products/${product._id}`, product,rootState.axiosConfig)
         .then(() => {
           log('Product updated successfuly');
           router.push('/');
         })
-        // .then(() => dispatch('fetchProduct', product.id))
       }
 
-      return axios.post(`/products`, product, { headers: {'x-csrf-token': rootState.csrf } })
+      return axios.post(`/products`, product, rootState.axiosConfig)
       .then(() => {
         log('product created successfully');
         router.push('/');
@@ -93,7 +92,7 @@ export default {
       axios.put(`/products/${product._id}/uploads`, data, rootState.axiosConfig)
       .then(res => {
         log('upload success', res);
-        dispatch('fetchProduct', product.id);
+        dispatch('fetchProduct', product._id);
       })
       .catch(err => {
         log('upload error', err);
@@ -111,7 +110,7 @@ export default {
       return axios.delete(`/uploads/${uploadId}`, rootState.axiosConfig)
       .then(() => {
         log('upload delete succesfully');
-        dispatch('fetchProduct', product.id);
+        dispatch('fetchProduct', product._id);
       })
       .catch(err => {
         log(err);
